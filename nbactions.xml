@@ -12,7 +12,7 @@
             <properties>
                 <exec.vmArgs></exec.vmArgs>
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
-                <exec.appArgs>lol 12  s -c -i C:\Users\nimo\Desktop\Alcohol_Effects_Maths\Alcohol_Effects_Maths\Maths.csv fus9hd 124 -o C:\Users\nimo\Desktop\Alcohol_Effects_Maths\output 54807 duofh apos xD</exec.appArgs>
+                <exec.appArgs>-c -i C:\Users\nimo\Documents\NetBeansProjects\Alcohol_Effects_Maths\input_data\Maths.csv -o C:\Users\nimo\Documents\NetBeansProjects\Alcohol_Effects_Maths\output_data\resoults</exec.appArgs>
                 <exec.mainClass>pl.polsl.alcohol_effects_maths.Alcohol_Effects_Maths</exec.mainClass>
                 <exec.executable>java</exec.executable>
             </properties>
@@ -29,7 +29,7 @@
             <properties>
                 <exec.vmArgs>-agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</exec.vmArgs>
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
-                <exec.appArgs>lol 12  s -c -i C:\Users\nimo\Desktop\Alcohol_Effects_Maths\Alcohol_Effects_Maths\Maths.csv fus9hd 124 -o C:\Users\nimo\Desktop\Alcohol_Effects_Maths\output 54807 duofh apos xD</exec.appArgs>
+                <exec.appArgs>-c -i C:\Users\nimo\Documents\NetBeansProjects\Alcohol_Effects_Maths\input_data\Maths.csv -o C:\Users\nimo\Documents\NetBeansProjects\Alcohol_Effects_Maths\output_data\resoults</exec.appArgs>
                 <exec.mainClass>pl.polsl.alcohol_effects_maths.Alcohol_Effects_Maths</exec.mainClass>
                 <exec.executable>java</exec.executable>
                 <jpda.listen>true</jpda.listen>
@@ -49,7 +49,7 @@
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
                 <exec.mainClass>pl.polsl.alcohol_effects_maths.Alcohol_Effects_Maths</exec.mainClass>
                 <exec.executable>java</exec.executable>
-                <exec.appArgs>lol 12  s -c -i C:\Users\nimo\Desktop\Alcohol_Effects_Maths\Alcohol_Effects_Maths\Maths.csv fus9hd 124 -o C:\Users\nimo\Desktop\Alcohol_Effects_Maths\output 54807 duofh apos xD</exec.appArgs>
+                <exec.appArgs>-c -i C:\Users\nimo\Documents\NetBeansProjects\Alcohol_Effects_Maths\input_data\Maths.csv -o C:\Users\nimo\Documents\NetBeansProjects\Alcohol_Effects_Maths\output_data\resoults</exec.appArgs>
             </properties>
         </action>
     </actions>

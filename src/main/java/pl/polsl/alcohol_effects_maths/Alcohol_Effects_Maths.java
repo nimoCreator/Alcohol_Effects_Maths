@@ -82,3 +82,24 @@ public class Alcohol_Effects_Maths {
         controller.run();
     }
 }
+
+
+
+/*
+
+TREŚĆ
+
+16. Badanie wpływu alkoholu na wyniki w nauce matematyki
+
+Aplikacja powinna umożliwiać przeprowadzenie analizy statystycznej dotyczącej badania wpływu alkoholu na efekty osiągane w nauce. Aplikacja powinna:
+
+· Obliczać korelację Pearsona pomiędzy płcią a konsumpcją alkoholu
+
+· Sortować konsumpcję alkoholu w tygodniu wg wieku
+
+· Wyświetlać, w jaki sposób [%] zmienia się weekendowa konsumpcja alkoholu w zależności od relacji rodzinnych
+
+· Wyświetlać szkołę, w której odsetek dziewczyn cechujących się dużą konsumpcją alkoholu w tygodniu był najwyższy.
+
+
+*/

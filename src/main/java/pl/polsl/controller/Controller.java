@@ -1,8 +1,8 @@
 package pl.polsl.controller;
 
-import com.opencsv.exceptions.CsvException;
 import pl.polsl.model.Model;
 import pl.polsl.view.View;
+import pl.polsl.classes.Results;
 
 /**
  *
@@ -14,8 +14,8 @@ public class Controller {
     private String arg_output_path = "";
     private Boolean arg_to_console = false;
     
-    private Model model;
-    private View view;
+    private final Model model;
+    private final View view;
     
     public Controller(String arg_input_path, String arg_output_path, Boolean arg_to_console)
     {
@@ -31,7 +31,9 @@ public class Controller {
     {
         model.loadFromCSV(arg_input_path);
         
-        if(arg_to_console) view.outputToConsole( model.calculateAll() );
-        view.printToTxt(model.calculateAll(), arg_output_path);
+        Results results = model.calculateAll();
+        
+        if(arg_to_console) view.outputToConsole( results );
+        view.printToTxt( results, arg_output_path);
     }
 }

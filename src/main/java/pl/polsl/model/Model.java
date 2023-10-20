@@ -8,12 +8,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import pl.polsl.classes.StudentData;
+import pl.polsl.classes.Results;
 
 /**
  *
@@ -21,7 +20,7 @@ import pl.polsl.classes.StudentData;
  */
 public class Model
 {
-    private final List<StudentData> data;
+    private final ArrayList<StudentData> data;
     
     public Model() 
     {
@@ -57,9 +56,10 @@ public class Model
         }
     }
     
-    public Map<String, String> calculateAll()
+    public Results calculateAll()
     {
-        Map<String, String> results = new HashMap<>();
+        Results results = new Results();
+        
         int n = data.size();
 
         int sumX = 0;
@@ -76,7 +76,7 @@ public class Model
         }
 
         if (n == 0) {
-            results.put("PearsonCorrelation", "No data available");
+            results.add("PearsonCorrelation", "No data available", "");
         } else {
             double meanX = (double) sumX / n;
             double meanY = (double) sumY / n;
@@ -97,10 +97,10 @@ public class Model
             }
 
             if (denominatorX == 0 || denominatorY == 0) {
-                results.put("PearsonCorrelation", "Undefined (division by zero)");
+                results.add("PearsonCorrelation", "Undefined (division by zero)", "");
             } else {
                 double correlation = numerator / (Math.sqrt(denominatorX) * Math.sqrt(denominatorY));
-                results.put("PearsonCorrelation", String.valueOf(correlation));
+                results.add("PearsonCorrelation", String.valueOf(correlation), "");
             }
         }
 
