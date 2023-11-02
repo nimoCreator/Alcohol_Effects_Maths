@@ -39,5 +39,9 @@ public class Results {
         }
         return resultString.toString();
     }
+
+    public void clear() {
+        resultsList.clear();
+    }
 }
 

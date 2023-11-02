@@ -1,5 +1,8 @@
 package pl.polsl.controller;
 
+import java.util.ArrayList;
+import pl.polsl.classes.ArgValues;
+import pl.polsl.classes.ErrorHandler;
 import pl.polsl.model.Model;
 import pl.polsl.view.View;
 import pl.polsl.classes.Results;
@@ -10,30 +13,58 @@ import pl.polsl.classes.Results;
  */
 public class Controller {
     
-    private String arg_input_path = "";
-    private String arg_output_path = "";
-    private Boolean arg_to_console = false;
+
+    private final ArgValues argValues = new ArgValues();
+    private final ErrorHandler errorHandler = new ErrorHandler();
     
     private final Model model;
     private final View view;
     
-    public Controller(String arg_input_path, String arg_output_path, Boolean arg_to_console)
+    public Controller()
+    {        
+        model = new Model(argValues, errorHandler);
+        view = new View(argValues, errorHandler);
+    }
+    
+    public void readArguments(ArrayList<String> arguments)
     {
-        this.arg_input_path = arg_input_path;
-        this.arg_output_path = arg_output_path;
-        this.arg_to_console = arg_to_console;
+        if (arguments.isEmpty()) {
+            errorHandler.addError(2, "You didn't include arguments while running the app.");
+        } else {
+            errorHandler.addError(1, "DEBUG INFO: Arguments: ");
+            for (int i = 0; i < arguments.size(); i++) {
+                if (arguments.get(i).equals("-i") && ++i != arguments.size()) {
+                    argValues.arg_input_path = arguments.get(i);
+                    errorHandler.addError(1,"\t Input file: "+ argValues.arg_input_path);
+                } else if (arguments.get(i).equals("-o") && ++i != arguments.size()) {
+                    argValues.arg_output_path = arguments.get(i);
+                    errorHandler.addError(1, "\t Output file: "+ argValues.arg_output_path);
+                } else if (arguments.get(i).equals("-c")) {
+                    argValues.arg_to_console = true;
+                    errorHandler.addError(1, "\t C - console: " + ( argValues.arg_to_console ? "TRUE" : "FALSE" ) );
+                }
+            }
+        }
         
-        model = new Model();
-        view = new View();
     }
     
     public void run()
     {
-        model.loadFromCSV(arg_input_path);
+        view.viewErrors();
+        
+        if (argValues.arg_input_path.equals("") || argValues.arg_output_path.equals("")) { view.handleNoArguments(); }   
+        view.viewErrors();
+        
+        model.loadFromCSV();
+        view.viewErrors();
         
         Results results = model.calculateAll();
+        view.viewErrors();
         
-        if(arg_to_console) view.outputToConsole( results );
-        view.printToTxt( results, arg_output_path);
+        if(argValues.arg_to_console)
+            view.outputToConsole( results );
+        
+        view.printToTxt( results );
+        view.viewErrors();
     }
 }

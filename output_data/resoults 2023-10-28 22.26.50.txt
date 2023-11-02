@@ -1,0 +1,6 @@
+PearsonCorrelation: -0.31205799511509696 
+WeekendAlcoholChange: 1 21.00
+WeekendAlcoholChange: 2 47.00
+WeekendAlcoholChange: 3 170.00
+WeekendAlcoholChange: 4 442.00
+WeekendAlcoholChange: 5 225.00

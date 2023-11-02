@@ -7,9 +7,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Map;
+import pl.polsl.classes.ArgValues;
+import pl.polsl.classes.ErrorHandler;
 
 import pl.polsl.classes.StudentData;
 import pl.polsl.classes.Results;
@@ -20,22 +24,30 @@ import pl.polsl.classes.Results;
  */
 public class Model
 {
+    private final ArgValues argValues;
+    private final ErrorHandler errorHandler;
+    private final Results results;
+ 
     private final ArrayList<StudentData> data;
     
-    public Model() 
+   
+    
+    public Model(ArgValues argValues, ErrorHandler errorHandler) 
     {
+        this.argValues = argValues;
+        this.errorHandler = errorHandler;
+        this.results = new Results();
+        
         data = new ArrayList<>();
     }
     
-    public void loadFromCSV(String filename)
+    public void loadFromCSV()
     {
         FileReader fileReader;
         try {
-            System.out.println("filename: " + filename);
-            fileReader = new FileReader(filename);
+            fileReader = new FileReader(argValues.arg_input_path);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Model.loadFromCSV() could not find or parse the file.");
+            errorHandler.addError(101, "Model.loadFromCSV() could not find or parse the file.");
             return;
         }
 
@@ -51,26 +63,41 @@ public class Model
                 data.add(new StudentData(row));
             }
         } catch (CsvException | IOException ex) {
-            System.out.println("Model.loadFromCSV() could not parse the file.");
-            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            errorHandler.addError(102, "Model.loadFromCSV() could not find or parse the file.");
         }
     }
-    
-    public Results calculateAll()
+      
+    public void sortAlcoholByAge()
     {
-        Results results = new Results();
+        Collections.sort(data, (StudentData student1, StudentData student2) -> 
+        {  
+            int ageComparison = Integer.compare(student1.getAge(), student2.getAge());
+            if (ageComparison == 0) {
+                double avgAlcohol1 = (student1.getDalc() + student1.getWalc()) / 2.0;
+                double avgAlcohol2 = (student2.getDalc() + student2.getWalc()) / 2.0;
+                return Double.compare(avgAlcohol1, avgAlcohol2);
+            }
+            return ageComparison;
+        });
         
+        StringBuilder sortedData = new StringBuilder();
+        for (StudentData student : data) {
+            sortedData.append(student.toString()).append("\n");
+        }
+        results.add("SortedAlcoholByAge", "Sorted alcohol consumption by age", sortedData.toString());
+    }
+    
+    private void pearsonCorrelation()
+    {
         int n = data.size();
-
-        int sumX = 0;
-        int sumY = 0;
+        int sumX = 0, sumY = 0;
 
         for (StudentData student : data) {
             String gender = student.getSex();
             int alcoholConsumption = (student.getDalc() + student.getWalc()) / 2;
-            if (gender != null && (gender.equals("M") || gender.equals("F"))) {
-                int genderValue = gender.equals("M") ? 1 : 0;
-                sumX += genderValue;
+
+            if (isValidGender(gender)) {
+                sumX += "mf".indexOf(gender.toLowerCase());
                 sumY += alcoholConsumption;
             }
         }
@@ -80,19 +107,17 @@ public class Model
         } else {
             double meanX = (double) sumX / n;
             double meanY = (double) sumY / n;
-
-            double numerator = 0.0;
-            double denominatorX = 0.0;
-            double denominatorY = 0.0;
+            double numerator = 0, denominatorX = 0, denominatorY = 0;
 
             for (StudentData student : data) {
                 String gender = student.getSex();
-                if (gender != null && (gender.equals("M") || gender.equals("F"))) {
-                    int genderValue = gender.equals("M") ? 1 : 0;
-                    int alcoholConsumption = (student.getDalc() + student.getWalc()) / 2;
+                int alcoholConsumption = (student.getDalc() + student.getWalc()) / 2;
+
+                if (isValidGender(gender)) {
+                    int genderValue = "mf".indexOf(gender.toLowerCase());
                     numerator += (genderValue - meanX) * (alcoholConsumption - meanY);
-                    denominatorX += Math.pow((genderValue - meanX), 2);
-                    denominatorY += Math.pow((alcoholConsumption - meanY), 2);
+                    denominatorX += Math.pow(genderValue - meanX, 2);
+                    denominatorY += Math.pow(alcoholConsumption - meanY, 2);
                 }
             }
 
@@ -103,7 +128,94 @@ public class Model
                 results.add("PearsonCorrelation", String.valueOf(correlation), "");
             }
         }
-
+    }
+    
+    public Results calculateAll()
+    {
+        results.clear();
+        
+        this.pearsonCorrelation();
+        this.separator();
+        this.sortAlcoholByAge();
+        
+        
         return results;
+    }
+    
+    public void separator()
+    {
+        this.results.add("--------------------------------", "", "");
+    }
+    
+        
+
+    public void calculateWeekendAlcoholChange() {
+
+        Map<Integer, Double> changeByFamilyRelationship = new HashMap<>();
+        for (StudentData student : data) {
+            Integer familyRelationship = student.getFamrel();
+            double weekendAlcohol = student.getWalc();
+
+            changeByFamilyRelationship.put(familyRelationship, changeByFamilyRelationship.getOrDefault(familyRelationship, 0.0) + weekendAlcohol);
+        }
+
+        for (Map.Entry<Integer, Double> entry : changeByFamilyRelationship.entrySet()) {
+            results.add("WeekendAlcoholChange", entry.getKey().toString(), String.format("%.2f", entry.getValue()));
+        }
+    }
+    
+    public void findSchoolWithHighestAlcoholConsumption()
+    {
+        String schoolWithHighestAlcohol = "";
+        double highestPercentage = 0.0;
+
+        for (String school : getUniqueSchools()) {
+            int totalGirlsInSchool = countGirlsInSchool(school);
+            int girlsWithHighAlcohol = countGirlsWithHighAlcoholInSchool(school);
+
+            double percentage = (double) girlsWithHighAlcohol / totalGirlsInSchool * 100;
+
+            if (percentage > highestPercentage) {
+                highestPercentage = percentage;
+                schoolWithHighestAlcohol = school;
+            }
+        }
+    }
+
+    private List<String> getUniqueSchools() {
+        List<String> schools = new ArrayList<>();
+        for (StudentData student : data) {
+            if (!schools.contains(student.getSchool())) {
+                schools.add(student.getSchool());
+            }
+        }
+        return schools;
+    }
+
+    private int countGirlsInSchool(String school) {
+        int count = 0;
+        for (StudentData student : data) {
+            if (student.getSchool().equals(school) && student.getSex().equalsIgnoreCase("F")) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private int countGirlsWithHighAlcoholInSchool(String school) {
+        int count = 0;
+        for (StudentData student : data) {
+            if (student.getSchool().equals(school) && student.getSex().equalsIgnoreCase("F")) {
+                int alcoholConsumption = (student.getDalc() + student.getWalc()) / 2;
+                if (alcoholConsumption >= 5) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+    
+    public boolean isValidGender(String gender) {
+        return "mf".contains(gender.toLowerCase());
     }
 }

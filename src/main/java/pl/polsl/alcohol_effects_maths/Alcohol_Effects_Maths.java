@@ -1,6 +1,8 @@
 package pl.polsl.alcohol_effects_maths;
 
-import java.util.Scanner;
+
+import java.util.ArrayList;
+import java.util.List;
 import pl.polsl.controller.Controller;
 
 /**
@@ -14,71 +16,18 @@ import pl.polsl.controller.Controller;
  * 
  * -c -i C:\Users\nimo\Desktop\Alcohol_Effects_Maths\Alcohol_Effects_Maths\Maths.csv -o C:\Users\nimo\Desktop\Alcohol_Effects_Maths\output
  * 
+ * -c -i C:\Users\nimo\Documents\NetBeansProjects\Alcohol_Effects_Maths\input_data\Maths.csv -o C:\Users\nimo\Documents\NetBeansProjects\Alcohol_Effects_Maths\output_data\resoults
+ * 
  */
-
-
 
 public class Alcohol_Effects_Maths {
 
-    private static class ArgValues {
-        public String arg_input_path = "";
-        public String arg_output_path = "";
-        public boolean arg_to_console = false;
-    }
+    public static void main(String[] args) {    
+        
+        ArrayList<String> arguments = new ArrayList<>(List.of(args));
 
-    private static final ArgValues arg_values = new ArgValues();
-
-    private static void NoArguments() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("""
-                           The arguments are 
-                           \t-i [filename]
-                           \t-o [filename]
-                           \t-c (output to console)
-                           Please provide the following:
-                           """);
-
-        if (arg_values.arg_input_path.equals("")) {
-            System.out.print("Input (relative/absolute path and filename)\n -i: ");
-            arg_values.arg_input_path = scanner.nextLine();
-        }
-
-        if (arg_values.arg_output_path.equals("")) {
-            System.out.print("Output (relative/absolute path and filename)\n -o: ");
-            arg_values.arg_output_path = scanner.nextLine();
-        }
-
-        System.out.print("Switches (write the letters)\n: ");
-        String input = scanner.nextLine();
-        if (input.toLowerCase().contains("c")) {
-            arg_values.arg_to_console = true;
-        }
-    }
-
-    public static void main(String[] args) {
-        int numberOfParameters = args.length;
-
-        if (numberOfParameters == 0) {
-            System.out.println("You didn't include arguments while running the app.");
-            NoArguments();
-        } else {
-            System.out.println("Arguments: ");
-            for (int i = 0; i < numberOfParameters; i++) {
-                if (args[i].equals("-i") && ++i != numberOfParameters) {
-                    arg_values.arg_input_path = args[i];
-                    System.out.println("\t Input file: "+ arg_values.arg_input_path);
-                } else if (args[i].equals("-o") && ++i != numberOfParameters) {
-                    arg_values.arg_output_path = args[i];
-                    System.out.println("\t Output file: "+ arg_values.arg_output_path);
-                } else if (args[i].equals("-c")) {
-                    arg_values.arg_to_console = true;
-                    System.out.println("\t C - console: " + ( arg_values.arg_to_console ? "TRUE" : "FALSE" ) );
-                }
-            }
-            if (arg_values.arg_input_path.equals("") || arg_values.arg_output_path.equals("")) { NoArguments(); }
-        }
-
-        Controller controller = new Controller(arg_values.arg_input_path, arg_values.arg_output_path, arg_values.arg_to_console);
+        Controller controller = new Controller();
+        controller.readArguments(arguments);
         controller.run();
     }
 }
@@ -100,6 +49,20 @@ Aplikacja powinna umożliwiać przeprowadzenie analizy statystycznej dotyczącej
 · Wyświetlać, w jaki sposób [%] zmienia się weekendowa konsumpcja alkoholu w zależności od relacji rodzinnych
 
 · Wyświetlać szkołę, w której odsetek dziewczyn cechujących się dużą konsumpcją alkoholu w tygodniu był najwyższy.
+
+
+*/
+
+
+/*
+
+POPRAWKI 1 z dnia 2023-10-23
+
+- nie powinno być innych metod statycznych poza metodą main()
+
+- za dużo pakietów
+
+- System.out.println powinno być w Widoku
 
 
 */

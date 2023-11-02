@@ -90,6 +90,7 @@ public class StudentData {
     
     public String getSchool()               { return this.school; }
     public void setSchool(String school)    { this.school = school; }
+    
     public String getSex()                  {return this.sex; }
     public void setSex(String sex)          { this.sex = sex; }
     
@@ -97,8 +98,15 @@ public class StudentData {
     
     public Integer getDalc()               { return this.Dalc; }
     public void setDalc(Integer  dalc)    { this.Dalc = dalc; }
+    
     public Integer getWalc()               { return this.Walc; }
     public void setWalc(Integer  walc)    { this.Walc = walc; }
+    
+    public Integer getFamrel()               { return this.famrel; }
+    public void setFamrel(Integer  famrel)    { this.famrel = famrel; }
+    
+    public Integer getAge()               { return this.age; }
+    public void setAge(Integer  age)    { this.age = age; }
     
     public void Validate()
     {
