@@ -7,16 +7,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import pl.polsl.classes.ArgValues;
 import pl.polsl.classes.ErrorHandler;
-
 import pl.polsl.classes.StudentData;
 import pl.polsl.classes.Results;
+import pl.polsl.classes.Agregator;
 
 /**
  *
@@ -27,10 +27,7 @@ public class Model
     private final ArgValues argValues;
     private final ErrorHandler errorHandler;
     private final Results results;
- 
     private final ArrayList<StudentData> data;
-    
-   
     
     public Model(ArgValues argValues, ErrorHandler errorHandler) 
     {
@@ -66,27 +63,32 @@ public class Model
             errorHandler.addError(102, "Model.loadFromCSV() could not find or parse the file.");
         }
     }
-      
-    public void sortAlcoholByAge()
-    {
-        Collections.sort(data, (StudentData student1, StudentData student2) -> 
-        {  
-            int ageComparison = Integer.compare(student1.getAge(), student2.getAge());
-            if (ageComparison == 0) {
-                double avgAlcohol1 = (student1.getDalc() + student1.getWalc()) / 2.0;
-                double avgAlcohol2 = (student2.getDalc() + student2.getWalc()) / 2.0;
-                return Double.compare(avgAlcohol1, avgAlcohol2);
-            }
-            return ageComparison;
-        });
-        
-        StringBuilder sortedData = new StringBuilder();
+    
+    // · Sortować konsumpcję alkoholu w tygodniu wg wieku
+    public void sortAlcoholByAge() {
+        Map<Integer, Agregator<Integer>> dataset = new HashMap<>();
         for (StudentData student : data) {
-            sortedData.append(student.toString()).append("\n");
+            int age = student.getAge();
+            int walc = student.getWalc();
+
+            if (dataset.containsKey(age)) {
+                dataset.get(age).add(walc);
+            } else {
+                dataset.add(age, new Agregator<Integer>(age, new ArrayList<Integer>(walc)))
+            }
         }
-        results.add("SortedAlcoholByAge", "Sorted alcohol consumption by age", sortedData.toString());
+
+        List<Map.Entry<Integer, List<Integer>>> sortedEntries = new ArrayList<>(ageToConsumption.entrySet());
+        sortedEntries.sort(Comparator.comparingDouble(entry -> entry.getValue().stream().mapToInt(Integer::intValue).average().orElse(0.0)));
+
+        results.add("WeeklyAgeConsumption\nAge: \tAvgWalc < NumOfRecords > \t[ data ]", "", "");
+
+        for (Map.Entry<Integer, List<Integer>> entry : sortedEntries) {
+            results.add(entry.getKey().toString(), "\t" + String.format("%.2f", entry.getValue().stream().mapToInt(Integer::intValue).average().orElse(0.0)), "\t< " + entry.getValue().size() + " >\t" + entry.getValue());
+        }
     }
     
+    // · Obliczać korelację Pearsona pomiędzy płcią a konsumpcją alkoholu
     private void pearsonCorrelation()
     {
         int n = data.size();
