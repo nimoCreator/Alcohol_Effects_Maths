@@ -31,6 +31,19 @@ public class Model {
     private final Results results;
     private final ArrayList<StudentData> data;
 
+    
+    
+    public Results getResults() 
+    {
+        return results;
+    }
+    
+    public ArrayList<StudentData> getData() 
+    {
+        return data;
+    }
+    
+    
     /**
      * Initializes the Model with argument values and an error handler. Also
      * initializes the results and data structures.
@@ -135,7 +148,7 @@ public class Model {
             if (dataset.containsKey(age)) {
                 dataset.get(age).add(walc);
             } else {
-                dataset.put(age, new Agregator<>(Integer.toString(age), new ArrayList<>(walc)));
+                dataset.put(age, new Agregator<>(Integer.toString(age), walc));
                 dataset.get(age).add(walc);
             }
         }
@@ -160,7 +173,7 @@ public class Model {
             if (dataset.containsKey(student.getFamrel())) {
                 dataset.get(student.getFamrel()).add(student.getWalc());
             } else {
-                dataset.put(student.getFamrel(), new Agregator<>(Integer.toString(student.getFamrel()), new ArrayList<>(student.getWalc())));
+                dataset.put(student.getFamrel(), new Agregator<>(Integer.toString(student.getFamrel()), student.getWalc()));
                 dataset.get(student.getFamrel()).add(student.getWalc());
             }
         }

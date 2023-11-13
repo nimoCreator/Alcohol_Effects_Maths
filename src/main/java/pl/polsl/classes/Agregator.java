@@ -31,6 +31,21 @@ public class Agregator<T extends Number> {
         average = sum / count;
     }
 
+    public Agregator(String label, T... elements) {
+    this.label = label;
+    this.data = new ArrayList<>();
+
+    for (T element : elements) {
+        data.add(element);
+        count++;
+        sum += element.doubleValue();
+    }
+
+    if (count > 0) {
+        average = sum / count;
+    }
+}
+    
     public Agregator(String label) {
         this.label = label;
         this.data = (Collection<T>) new ArrayList<Double>();
