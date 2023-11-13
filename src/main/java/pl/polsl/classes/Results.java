@@ -14,9 +14,9 @@ class Result {
     }
 
     @Override
-    public String toString() {
-        return label + ": " + value + " " + unit;
-    }
+public String toString() {
+    return label + ": " + value + " " + unit.replace("%", "%%");
+}
 }
 
 public class Results {

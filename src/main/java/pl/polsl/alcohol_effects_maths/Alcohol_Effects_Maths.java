@@ -20,8 +20,18 @@ import pl.polsl.controller.Controller;
  * 
  */
 
+/**
+ * The main class of the Alcohol Effects application.
+ * Parses command-line arguments and initiates the application's controller.
+ */
 public class Alcohol_Effects_Maths {
 
+        /**
+     * The entry point for the Alcohol Effects application.
+     * Parses command-line arguments, initializes the controller,
+     * and starts the application.
+     * @param args Command-line arguments passed to the application.
+     */
     public static void main(String[] args) {    
         
         ArrayList<String> arguments = new ArrayList<>(List.of(args));

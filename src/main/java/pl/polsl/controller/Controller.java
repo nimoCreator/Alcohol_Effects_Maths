@@ -8,7 +8,9 @@ import pl.polsl.view.View;
 import pl.polsl.classes.Results;
 
 /**
- *
+ * Controls the flow of the Alcohol Effects application.
+ * Reads command-line arguments, manages error handling,
+ * and coordinates interactions between the model and view.
  * @author nimo
  */
 public class Controller {
@@ -26,6 +28,11 @@ public class Controller {
         view = new View(argValues, errorHandler);
     }
     
+     /**
+     * Reads and processes command-line arguments.
+     * Handles user interaction for missing or incorrect arguments.
+     * @param arguments The command-line arguments passed to the application.
+     */
     public void readArguments(ArrayList<String> arguments)
     {
         if (arguments.isEmpty()) {
@@ -48,6 +55,9 @@ public class Controller {
         
     }
     
+     /**
+     * starts the default behavior of the program
+     */
     public void run()
     {
         view.viewErrors();

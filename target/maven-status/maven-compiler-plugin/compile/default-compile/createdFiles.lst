@@ -1,4 +1,5 @@
 pl\polsl\classes\Result.class
+pl\polsl\classes\Agregator.class
 pl\polsl\model\Model.class
 pl\polsl\classes\ErrorHandler.class
 pl\polsl\classes\ErrorHandler$ErrorUnit.class
