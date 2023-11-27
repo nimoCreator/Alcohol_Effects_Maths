@@ -93,7 +93,7 @@ public class Model {
      * Calculates the Pearson correlation between gender and alcohol
      * consumption. This is the solution for task 1: "Obliczać korelację Pearsona pomiędzy płcią a konsumpcją alkoholu"
      */
-    private void pearsonCorrelation() {
+    public void pearsonCorrelation() {
         int n = data.size();
         int sumX = 0, sumY = 0;
 
@@ -159,7 +159,7 @@ public class Model {
         results.add("WeeklyAgeConsumption\nAge: \tAvgWalc < NumOfRecords > \t[ data ]", "", "");
 
         for (Map.Entry<Integer, Agregator<Integer>> entry : sortedEntries) {
-            results.add(entry.getKey().toString(), "\t" + String.format("%.2f", entry.getValue().Average()), "\t< " + entry.getValue().Count() + " >\t" + entry.getValue().Data());
+            results.add(entry.getKey().toString() + "\t",  String.format("%.2f", entry.getValue().Average()), "\t< " + entry.getValue().Count() + " >\t" + entry.getValue().Data());
         }
     }
 
@@ -167,7 +167,7 @@ public class Model {
      * Displays the percentage change in weekend alcohol consumption based on
      * family relationships. This is the solution for task 3: "Sortować konsumpcję alkoholu w tygodniu wg wieku"
      */
-    private void familyRelInfluenceWalc() {
+    public void familyRelInfluenceWalc() {
         Map<Integer, Agregator<Integer>> dataset = new HashMap<>();
         for (StudentData student : data) {
             if (dataset.containsKey(student.getFamrel())) {
@@ -202,7 +202,7 @@ public class Model {
      * Displays the school with the highest percentage of girls with high
      * alcohol consumption. This is the solution for task 4: "Wyświetlać szkołę, w której odsetek dziewczyn cechujących się dużą konsumpcją alkoholu w tygodniu był najwyższy"
      */
-    private void schoolMaxFemaleDrinking() {
+    public void schoolMaxFemaleDrinking() {
         Map<String, Agregator<Integer>> dataset = new HashMap<>();
 
         for (StudentData student : data) {
@@ -273,5 +273,19 @@ public class Model {
      */
     public boolean isValidGender(String gender) {
         return "mf".contains(gender.toLowerCase());
+    }
+    
+    
+   /**
+     * Special constructor for testing purposes. Initializes the Model with test data.
+     * @param argValues     The argument values passed to the application.
+     * @param errorHandler  The error handler for managing application errors.
+     * @param testStudentData  Test data for the model (for testing purposes).
+     */
+    public Model(ArgValues argValues, ErrorHandler errorHandler, List<StudentData> testStudentData) {
+        this.argValues = argValues;
+        this.errorHandler = errorHandler;
+        this.results = new Results();
+        this.data = new ArrayList<>(testStudentData);
     }
 }

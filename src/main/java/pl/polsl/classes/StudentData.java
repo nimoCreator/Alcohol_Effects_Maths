@@ -85,13 +85,57 @@ public class StudentData {
         G2 = Integer.parseInt(values[31]);
         G3 = Integer.parseInt(values[32]);
         
-        Validate();
+        validate();
     }
+
+public StudentData(String school, String sex, int age, String address, String famsize, String Pstatus,
+                   int Medu, int Fedu, String Mjob, String Fjob, String reason, String guardian,
+                   int traveltime, int studytime, int failures, String schoolsup, String famsup,
+                   String paid, String activities, String nursery, String higher, String internet,
+                   String romantic, int famrel, int freetime, int goout, int Dalc, int Walc,
+                   int health, int absences, int G1, int G2, int G3) {
+    this.school = school;
+    this.sex = sex;
+    this.age = age;
+    this.address = address;
+    this.famsize = famsize;
+    this.Pstatus = Pstatus;
+    this.Medu = Medu;
+    this.Fedu = Fedu;
+    this.Mjob = Mjob;
+    this.Fjob = Fjob;
+    this.reason = reason;
+    this.guardian = guardian;
+    this.traveltime = traveltime;
+    this.studytime = studytime;
+    this.failures = failures;
+    this.schoolsup = schoolsup;
+    this.famsup = famsup;
+    this.paid = paid;
+    this.activities = activities;
+    this.nursery = nursery;
+    this.higher = higher;
+    this.internet = internet;
+    this.romantic = romantic;
+    this.famrel = famrel;
+    this.freetime = freetime;
+    this.goout = goout;
+    this.Dalc = Dalc;
+    this.Walc = Walc;
+    this.health = health;
+    this.absences = absences;
+    this.G1 = G1;
+    this.G2 = G2;
+    this.G3 = G3;
+
+    validate();
+}
+
     
     public String getSchool()               { return this.school; }
     public void setSchool(String school)    { this.school = school; }
     
-    public String getSex()                  {return this.sex; }
+    public String getSex()                  { return this.sex; }
     public void setSex(String sex)          { this.sex = sex; }
     
     public Boolean getValid()               { return this.valid; }
@@ -108,7 +152,7 @@ public class StudentData {
     public Integer getAge()               { return this.age; }
     public void setAge(Integer  age)    { this.age = age; }
     
-    public void Validate()
+    public void validate()
     {
     valid = school != null && !school.isEmpty() && 
         sex != null && (sex.equals("M") || sex.equals("F")) && 

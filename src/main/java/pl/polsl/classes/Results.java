@@ -1,23 +1,9 @@
 package pl.polsl.classes;
 
 import java.util.ArrayList;
+import java.util.List;
 
-class Result {
-    private final String label;
-    private final String value;
-    private final String unit;
-
-    public Result(String label, String value, String unit) {
-        this.label = label;
-        this.value = value;
-        this.unit = unit;
-    }
-
-    @Override
-public String toString() {
-    return label + ": " + value + " " + unit.replace("%", "%%");
-}
-}
+import pl.polsl.classes.Result;
 
 public class Results {
     private final ArrayList<Result> resultsList;
@@ -40,6 +26,21 @@ public class Results {
         return resultString.toString();
     }
 
+    public Result getNthResult(int n)
+    {
+        if (n >= 0 && n < resultsList.size())
+        {
+            return resultsList.get(n);
+        } else {
+            throw new IndexOutOfBoundsException("Index " + n + " is out of bounds for the results list");
+        }
+    }
+
+    public List<Result> getResultsList() 
+    {
+        return new ArrayList<>(resultsList);
+    }
+    
     public void clear() {
         resultsList.clear();
     }
