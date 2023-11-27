@@ -15,6 +15,15 @@ public class Agregator<T extends Number> {
     Double sum;
     Integer count;
     
+    public Agregator()
+    {
+        this.label = "";
+        this.data = null;
+        this.count = 0;
+        this.sum = Double.valueOf(0);
+        this.average = 0.0;
+    }
+    
     public Agregator(String label, Collection<T> data)
     {
         this.label = label;
@@ -31,20 +40,23 @@ public class Agregator<T extends Number> {
         average = sum / count;
     }
 
-    public Agregator(String label, T... elements) {
-    this.label = label;
-    this.data = new ArrayList<>();
+    public Agregator(String label, T... elements) 
+    {
+        this.label = label;
+        this.data = new ArrayList<>();
+        this.count = 0;
+        this.sum = Double.valueOf(0);
 
-    for (T element : elements) {
-        data.add(element);
-        count++;
-        sum += element.doubleValue();
-    }
+        for (T element : elements) {
+            data.add(element);
+            count++;
+            sum += element.doubleValue();
+        }
 
-    if (count > 0) {
-        average = sum / count;
+        if (count > 0) {
+            average = sum / count;
+        }
     }
-}
     
     public Agregator(String label) {
         this.label = label;

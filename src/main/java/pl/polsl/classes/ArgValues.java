@@ -15,4 +15,10 @@ public class ArgValues {
         this.arg_to_console = arg_to_console;
                 
     }
+
+    public ArgValues() {
+        this.arg_input_path = "";
+        this.arg_output_path = "";
+        this.arg_to_console = false;
+    }
 }

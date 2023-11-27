@@ -26,6 +26,7 @@ public class Controller {
     {        
         model = new Model(argValues, errorHandler);
         view = new View(argValues, errorHandler);
+        view.setModel(model);
     }
     
      /**
@@ -63,18 +64,8 @@ public class Controller {
         view.viewErrors();
         
         if (argValues.arg_input_path.equals("") || argValues.arg_output_path.equals("")) { view.handleNoArguments(); }   
+        
         view.viewErrors();
         
-        model.loadFromCSV();
-        view.viewErrors();
-        
-        Results results = model.calculateAll();
-        view.viewErrors();
-        
-        if(argValues.arg_to_console)
-            view.outputToConsole( results );
-        
-        view.printToTxt( results );
-        view.viewErrors();
     }
 }
