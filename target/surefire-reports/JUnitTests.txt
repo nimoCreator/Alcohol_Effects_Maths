@@ -1,22 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: JUnitTests
 -------------------------------------------------------------------------------
-Tests run: 6, Failures: 3, Errors: 1, Skipped: 0, Time elapsed: 0.047 sec <<< FAILURE! - in JUnitTests
-testSchoolMaxFemaleDrinking  Time elapsed: 0.012 sec  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <GP (0.00%)> but was: <>
-	at JUnitTests.testSchoolMaxFemaleDrinking(JUnitTests.java:90)
-
-testPearsonCorrelation  Time elapsed: 0.002 sec  <<< ERROR!
-java.lang.NumberFormatException: For input string: "Undefined (division by zero)"
-	at JUnitTests.testPearsonCorrelation(JUnitTests.java:48)
-
-testSortAlcoholByAge  Time elapsed: 0.004 sec  <<< FAILURE!
-org.opentest4j.AssertionFailedError: 
-expected: <WeeklyAgeConsumption> but was: <WeeklyAgeConsumption
-Age: 	AvgWalc < NumOfRecords > 	[ data ]>
-	at JUnitTests.testSortAlcoholByAge(JUnitTests.java:59)
-
-testFamilyRelInfluenceWalc  Time elapsed: 0.004 sec  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <FamilyRelInfluenceWalc> but was: <baselineAverage>
-	at JUnitTests.testFamilyRelInfluenceWalc(JUnitTests.java:71)
-
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.099 sec - in JUnitTests

@@ -1,11 +1,13 @@
 package pl.polsl.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import pl.polsl.classes.ArgValues;
 import pl.polsl.classes.ErrorHandler;
 import pl.polsl.model.Model;
 import pl.polsl.view.View;
 import pl.polsl.classes.Results;
+import pl.polsl.classes.StudentData;
 
 /**
  * Controls the flow of the Alcohol Effects application.
@@ -23,8 +25,20 @@ public class Controller {
     private final View view;
     
     public Controller()
-    {        
-        model = new Model(argValues, errorHandler);
+    {   
+        List<StudentData> testData = new ArrayList<>();
+        testData.add(new StudentData(
+                "GP", "F", 18, "U", "GT3", "A", 4, 4, "at_home", "teacher",
+                "course", "mother", 2, 2, 0, "yes", "no", "no", "no", "yes",
+                "yes", "no", "no", 4, 3, 4, 1, 1, 3, 6, 5, 6, 6));
+        testData.add(new StudentData(
+                "GP", "F", 18, "U", "GT3", "A", 4, 4, "at_home", "teacher",
+                "course", "mother", 2, 2, 0, "yes", "no", "no", "no", "yes",
+                "yes", "no", "no", 4, 3, 4, 1, 1, 3, 6, 5, 6, 6));
+
+        model = new Model(argValues, errorHandler, testData);
+        
+        //model = new Model(argValues, errorHandler);
         view = new View(argValues, errorHandler);
         view.setModel(model);
     }

@@ -64,29 +64,31 @@ public class Model {
      * arguments. Handles file reading and parsing errors.
      */
     public void loadFromCSV() {
-        FileReader fileReader;
-        try {
-            fileReader = new FileReader(argValues.arg_input_path);
-        } catch (FileNotFoundException ex) {
-            errorHandler.addError(101, "Model.loadFromCSV() could not find or parse the file.");
-            return;
-        }
-
-        try (CSVReader csvReader = new CSVReader(fileReader)) {
-
-            String[] headers = csvReader.readNext();
-
-            if (headers != null) {
-            }
-
-            List<String[]> readData = csvReader.readAll();
-
-            for (String[] row : readData) {
-                data.add(new StudentData(row));
-            }
-        } catch (CsvException | IOException ex) {
-            errorHandler.addError(102, "Model.loadFromCSV() could not find or parse the file.");
-        }
+        return;
+        
+//        FileReader fileReader;
+//        try {
+//            fileReader = new FileReader(argValues.arg_input_path);
+//        } catch (FileNotFoundException ex) {
+//            errorHandler.addError(101, "Model.loadFromCSV() could not find or parse the file.");
+//            return;
+//        }
+//
+//        try (CSVReader csvReader = new CSVReader(fileReader)) {
+//
+//            String[] headers = csvReader.readNext();
+//
+//            if (headers != null) {
+//            }
+//
+//            List<String[]> readData = csvReader.readAll();
+//
+//            for (String[] row : readData) {
+//                data.add(new StudentData(row));
+//            }
+//        } catch (CsvException | IOException ex) {
+//            errorHandler.addError(102, "Model.loadFromCSV() could not find or parse the file.");
+//        }
     }
 
     /**

@@ -1,0 +1,13 @@
+PearsonCorrelation: Undefined (division by zero) 
+--------------------------------:  
+WeeklyAgeConsumption
+Age: 	AvgWalc < NumOfRecords > 	[ data ]:  
+18	: 1.00 	< 3 >	[1, 1, 1]
+--------------------------------:  
+baselineAverage: 1.0 
+totalWeekendAlcohol: 3.0 
+totalCount: 3 
+averageWeekendAlcohol: 1.0 
+FamilyRelInfluenceWalc: 0.0 %
+--------------------------------:  
+SchoolWithHighestAlcoholConsumption:  (0.00% )
