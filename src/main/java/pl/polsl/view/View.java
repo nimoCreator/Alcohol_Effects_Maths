@@ -82,11 +82,11 @@ public class View {
      * Prints the results to the console.
      * @param results The results to be printed.
      */
-    public void outputToConsole(Results results) {
-        System.out.println("========================\n        Resoults\n========================");
-        System.out.printf(results.toString());
-    }
-    
+//    public void outputToConsole(Results results) {
+//        System.out.println("========================\n        Resoults\n========================");
+//        System.out.printf(results.toString());
+//    }
+//    
     /**
     * Prints any errors stored in the error handler to the standard error stream.
     */
@@ -101,32 +101,32 @@ public class View {
     * Prompts the user to provide input for missing arguments.
     * Reads input from the console to set input paths and switches.
     */
-    public void handleNoArguments() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("""
-                           The arguments are 
-                           \t-i [filename]
-                           \t-o [filename]
-                           \t-c (output to console)
-                           Please provide the following:
-                           """);
-
-        if (argValues.arg_input_path.equals("")) {
-            System.out.print("Input (relative/absolute path and filename)\n -i: ");
-            argValues.arg_input_path = scanner.nextLine();
-        }
-
-        if (argValues.arg_output_path.equals("")) {
-            System.out.print("Output (relative/absolute path and filename)\n -o: ");
-            argValues.arg_output_path = scanner.nextLine();
-        }
-
-        System.out.print("Switches (write the letters)\n: ");
-        String input = scanner.nextLine();
-        if (input.toLowerCase().contains("c")) {
-            argValues.arg_to_console = true;
-        }
-    }
+//    public void handleNoArguments() {
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.println("""
+//                           The arguments are 
+//                           \t-i [filename]
+//                           \t-o [filename]
+//                           \t-c (output to console)
+//                           Please provide the following:
+//                           """);
+//
+//        if (argValues.arg_input_path.equals("")) {
+//            System.out.print("Input (relative/absolute path and filename)\n -i: ");
+//            argValues.arg_input_path = scanner.nextLine();
+//        }
+//
+//        if (argValues.arg_output_path.equals("")) {
+//            System.out.print("Output (relative/absolute path and filename)\n -o: ");
+//            argValues.arg_output_path = scanner.nextLine();
+//        }
+//
+//        System.out.print("Switches (write the letters)\n: ");
+//        String input = scanner.nextLine();
+//        if (input.toLowerCase().contains("c")) {
+//            argValues.arg_to_console = true;
+//        }
+//    }
     
     private String chooseFileOpen() {
         JFileChooser fileChooser = new JFileChooser();
@@ -178,8 +178,8 @@ public class View {
                 Results results = modelAccess.calculateAll();
                 viewErrors();
 
-                if(argValues.arg_to_console)
-                    outputToConsole( results );
+//                if(argValues.arg_to_console)
+//                    outputToConsole( results );
 
                 if(!"".equals(argValues.arg_output_path))
                     printToTxt( results );  
